@@ -193,6 +193,20 @@ and how the water register was calibrated to 10 L / 0.01 m³ per step.
 
 ---
 
+## References
+
+- **GroupLink / GL One** — official site: <https://grouplinkone.com>
+  (water sensor product page: <https://grouplinkone.com/pt/gl-utilities-water-mdi>)
+- **GL One SDK documentation**: <https://sdk.grouplinkone.com/docs/SDK%20Documentation/Introduction>
+- **Official app "Consumo Inteligente"**:
+  [Google Play](https://play.google.com/store/apps/details?id=com.grouplinknetwork.gl_consumo_inteligente)
+  · [App Store](https://apps.apple.com/br/app/consumo-inteligente/id6450606003)
+- Protocol notes: [`docs/PROTOCOL.md`](docs/PROTOCOL.md)
+
+The integration icon lives in `custom_components/gl_one/brand/` and can be replaced.
+
+---
+
 ## License
 
 MIT — see [LICENSE](LICENSE). Not affiliated with GroupLink / GLOne. For
