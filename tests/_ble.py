@@ -16,7 +16,11 @@ ADDRESS = "AA:BB:CC:DD:EE:FF"
 def make_service_info(raw: bytes, address: str = ADDRESS, rssi: int = -60):
     """Wrap a 0xF0DA manufacturer-data payload in a BluetoothServiceInfoBleak."""
     manufacturer_data = {MANUFACTURER_ID: raw}
-    device = BLEDevice(address, None, {})
+    try:
+        # bleak < 3 requires a positional rssi; bleak >= 3 dropped it.
+        device = BLEDevice(address, None, {}, rssi)
+    except TypeError:
+        device = BLEDevice(address, None, {})
     advertisement = AdvertisementData(
         local_name=None,
         manufacturer_data=manufacturer_data,

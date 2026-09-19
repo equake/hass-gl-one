@@ -2,6 +2,7 @@
 
 from unittest.mock import patch
 
+import pytest
 from _ble import make_service_info
 from homeassistant.components.bluetooth import BluetoothChange
 from homeassistant.core import HomeAssistant
@@ -20,18 +21,16 @@ from custom_components.gl_one.coordinator import GLOneCoordinator
 DEVICE_ID = 2986005667
 
 
-def _entry() -> MockConfigEntry:
-    return MockConfigEntry(
+@pytest.fixture
+async def coordinator(hass: HomeAssistant):
+    """Set up a coordinator with a captured Bluetooth callback; always shut down."""
+    entry = MockConfigEntry(
         domain=DOMAIN,
         unique_id=str(DEVICE_ID),
         data={CONF_DEVICE_ID: DEVICE_ID, CONF_KIND: KIND_WATER, CONF_OFFSET: 31.12},
     )
-
-
-async def _setup_coordinator(hass: HomeAssistant) -> tuple[GLOneCoordinator, dict]:
-    entry = _entry()
     entry.add_to_hass(hass)
-    coordinator = GLOneCoordinator(hass, entry)
+    coord = GLOneCoordinator(hass, entry)
     captured: dict = {}
 
     def fake_register(hass_, cb, matcher, mode):
@@ -42,48 +41,40 @@ async def _setup_coordinator(hass: HomeAssistant) -> tuple[GLOneCoordinator, dic
         "custom_components.gl_one.coordinator.bluetooth.async_register_callback",
         side_effect=fake_register,
     ):
-        await coordinator.async_setup()
-    return coordinator, captured
+        await coord.async_setup()
+
+    yield coord, captured
+
+    await coord.async_shutdown()
 
 
-async def test_decodes_and_computes(hass: HomeAssistant) -> None:
-    coordinator, captured = await _setup_coordinator(hass)
+async def test_decodes_and_computes(coordinator) -> None:
+    coord, captured = coordinator
 
-    assert coordinator.available is False
-    assert coordinator.consumption is None
-    assert coordinator.index is None
+    assert coord.available is False
+    assert coord.consumption is None
+    assert coord.index is None
 
     captured["cb"](make_service_info(METER), BluetoothChange.ADVERTISEMENT)
 
-    assert coordinator.available is True
-    assert coordinator.reading is not None
-    assert coordinator.reading.device_id == DEVICE_ID
-    assert coordinator.consumption == 2.59
-    assert coordinator.index == 33.71  # 2.59 + 31.12 install offset
-    assert coordinator.rssi == -60
-
-    await coordinator.async_shutdown()
+    assert coord.available is True
+    assert coord.reading is not None
+    assert coord.reading.device_id == DEVICE_ID
+    assert coord.consumption == 2.59
+    assert coord.index == 33.71  # 2.59 + 31.12 install offset
+    assert coord.rssi == -60
 
 
-async def test_ignores_other_device(hass: HomeAssistant) -> None:
-    coordinator, captured = await _setup_coordinator(hass)
-
-    # A valid meter beacon but a different device id must be ignored. Rebuild a
-    # METER payload but point the coordinator at a different id.
-    coordinator.device_id = 999999999
+async def test_ignores_other_device(coordinator) -> None:
+    coord, captured = coordinator
+    coord.device_id = 999999999  # a valid meter beacon, but not ours
     captured["cb"](make_service_info(METER), BluetoothChange.ADVERTISEMENT)
-
-    assert coordinator.reading is None
-    assert coordinator.available is False
-
-    await coordinator.async_shutdown()
+    assert coord.reading is None
+    assert coord.available is False
 
 
-async def test_offset_updates_index(hass: HomeAssistant) -> None:
-    coordinator, captured = await _setup_coordinator(hass)
+async def test_offset_updates_index(coordinator) -> None:
+    coord, captured = coordinator
     captured["cb"](make_service_info(METER), BluetoothChange.ADVERTISEMENT)
-
-    coordinator.set_offset(0.0)
-    assert coordinator.index == 2.59  # consumption only, no offset
-
-    await coordinator.async_shutdown()
+    coord.set_offset(0.0)
+    assert coord.index == 2.59  # consumption only, no offset
