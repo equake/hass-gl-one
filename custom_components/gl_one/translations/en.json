@@ -1,0 +1,53 @@
+{
+  "config": {
+    "flow_title": "GL One {device_id}",
+    "step": {
+      "user": {
+        "title": "GL One meter",
+        "description": "Enter the pairing/QR id printed on your GL One sensor and what it measures. The install index is the reading the mechanical meter already had when the sensor was fitted (leave 0 to only track consumption since then).",
+        "data": {
+          "device_id": "Pairing / QR id",
+          "kind": "Measures",
+          "offset": "Install index"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "GL One meter",
+        "description": "Set up the meter with pairing id {device_id}? Choose what it measures. The install index is the reading the mechanical meter already had when the sensor was fitted (leave 0 to only track consumption since then).",
+        "data": {
+          "kind": "Measures",
+          "offset": "Install index"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This meter is already configured.",
+      "not_supported": "This Bluetooth device is not a GL One meter beacon."
+    },
+    "error": {
+      "invalid_device_id": "The pairing id must be a positive number."
+    }
+  },
+  "selector": {
+    "kind": {
+      "options": {
+        "water": "Water",
+        "gas": "Gas (not yet calibrated)",
+        "energy": "Energy (not yet calibrated)"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "consumption": { "name": "Consumption (since install)" },
+      "index": { "name": "Meter index" },
+      "register": { "name": "Raw register" },
+      "rssi": { "name": "Signal strength" },
+      "uptime": { "name": "Device uptime" },
+      "last_seen": { "name": "Last seen" }
+    },
+    "number": {
+      "offset": { "name": "Install index" }
+    }
+  }
+}

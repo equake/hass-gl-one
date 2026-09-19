@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Linting / type checking
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Home Assistant
+custom_components/gl_water/__pycache__/
+
+# Claude Code
+.claude/
+
+# Local reverse-engineering artefacts (not part of the integration)
+*.xapk

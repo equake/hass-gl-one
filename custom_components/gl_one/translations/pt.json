@@ -1,0 +1,53 @@
+{
+  "config": {
+    "flow_title": "GL One {device_id}",
+    "step": {
+      "user": {
+        "title": "Medidor GL One",
+        "description": "Informe o id de pareamento/QR impresso no seu sensor GL One e o que ele mede. O índice de instalação é a leitura que o medidor mecânico já tinha quando o sensor foi instalado (deixe 0 para acompanhar apenas o consumo a partir de então).",
+        "data": {
+          "device_id": "Id de pareamento / QR",
+          "kind": "Mede",
+          "offset": "Índice de instalação"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Medidor GL One",
+        "description": "Configurar o medidor com id de pareamento {device_id}? Escolha o que ele mede. O índice de instalação é a leitura que o medidor mecânico já tinha quando o sensor foi instalado (deixe 0 para acompanhar apenas o consumo a partir de então).",
+        "data": {
+          "kind": "Mede",
+          "offset": "Índice de instalação"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Este medidor já está configurado.",
+      "not_supported": "Este dispositivo Bluetooth não é um beacon de medidor GL One."
+    },
+    "error": {
+      "invalid_device_id": "O id de pareamento deve ser um número positivo."
+    }
+  },
+  "selector": {
+    "kind": {
+      "options": {
+        "water": "Água",
+        "gas": "Gás (ainda não calibrado)",
+        "energy": "Energia (ainda não calibrado)"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "consumption": { "name": "Consumo (desde a instalação)" },
+      "index": { "name": "Índice do medidor" },
+      "register": { "name": "Registro bruto" },
+      "rssi": { "name": "Intensidade do sinal" },
+      "uptime": { "name": "Tempo ligado do dispositivo" },
+      "last_seen": { "name": "Visto por último" }
+    },
+    "number": {
+      "offset": { "name": "Índice de instalação" }
+    }
+  }
+}
