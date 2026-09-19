@@ -11,3 +11,6 @@ combine-as-imports = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+# Put the repo root on sys.path so tests can `import custom_components.gl_one`
+# regardless of how pytest is invoked (script vs `python -m`).
+pythonpath = ["."]
