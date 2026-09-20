@@ -136,6 +136,13 @@ class GLOneCoordinator:
         return round(self.reading.register * self.increment, 2)
 
     @property
+    def consumption_liters(self) -> float | None:
+        """Consumption since install, in litres (for the water dashboard)."""
+        if self.reading is None:
+            return None
+        return round(self.reading.register * self.increment * 1000, 1)
+
+    @property
     def index(self) -> float | None:
         """Absolute meter index (consumption + install offset), matches the app."""
         consumo = self.consumption

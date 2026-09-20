@@ -39,7 +39,8 @@
   },
   "entity": {
     "sensor": {
-      "consumption": { "name": "Consumption (since install)" },
+      "consumption": { "name": "Consumption m³" },
+      "consumption_liters": { "name": "Consumption liters" },
       "index": { "name": "Meter index" },
       "register": { "name": "Raw register" },
       "rssi": { "name": "Signal strength" },

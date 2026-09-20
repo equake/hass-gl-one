@@ -39,15 +39,32 @@
   },
   "entity": {
     "sensor": {
-      "consumption": { "name": "Consumo (desde a instalação)" },
-      "index": { "name": "Índice do medidor" },
-      "register": { "name": "Registro bruto" },
-      "rssi": { "name": "Intensidade do sinal" },
-      "uptime": { "name": "Tempo ligado do dispositivo" },
-      "last_seen": { "name": "Visto por último" }
+      "consumption": {
+        "name": "Consumo m³"
+      },
+      "consumption_liters": {
+        "name": "Consumo litros"
+      },
+      "index": {
+        "name": "Índice do medidor"
+      },
+      "register": {
+        "name": "Registro bruto"
+      },
+      "rssi": {
+        "name": "Intensidade do sinal"
+      },
+      "uptime": {
+        "name": "Tempo ligado do dispositivo"
+      },
+      "last_seen": {
+        "name": "Visto por último"
+      }
     },
     "number": {
-      "offset": { "name": "Índice de instalação" }
+      "offset": {
+        "name": "Índice de instalação"
+      }
     }
   }
 }

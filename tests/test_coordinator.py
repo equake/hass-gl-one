@@ -61,6 +61,7 @@ async def test_decodes_and_computes(coordinator) -> None:
     assert coord.reading is not None
     assert coord.reading.device_id == DEVICE_ID
     assert coord.consumption == 2.59
+    assert coord.consumption_liters == 2590.0  # 259 units x 10 L
     assert coord.index == 33.71  # 2.59 + 31.12 install offset
     assert coord.rssi == -60
 

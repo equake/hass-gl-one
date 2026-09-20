@@ -139,7 +139,8 @@ and (optionally) the install index. Repeat for each meter you own.
 
 | Entity | Class | Notes |
 |---|---|---|
-| Consumption (since install) | `total_increasing` | Feed this to `utility_meter` for daily/monthly |
+| Consumption m³ | `total_increasing` | Consumption since install, in m³. Feed to `utility_meter` |
+| Consumption liters | `total_increasing` | Same, in litres (water only) — handy for the water dashboard |
 | Meter index | `total_increasing` | = consumption + install index; matches the app |
 | Raw register | diagnostic | The on-air 16-bit counter (water: 1 = 10 L) |
 | Signal strength | diagnostic | Disabled by default |
@@ -155,10 +156,10 @@ and (optionally) the install index. Repeat for each meter you own.
 # configuration.yaml
 utility_meter:
   agua_diaria:
-    source: sensor.gl_one_2986005667_consumption
+    source: sensor.gl_one_2986005667_consumption_m3
     cycle: daily
   agua_mensal:
-    source: sensor.gl_one_2986005667_consumption
+    source: sensor.gl_one_2986005667_consumption_m3
     cycle: monthly
 ```
 

@@ -16,11 +16,13 @@ from homeassistant.const import (
     SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
     EntityCategory,
     UnitOfTime,
+    UnitOfVolume,
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from . import GLOneConfigEntry, kinds
+from .const import KIND_WATER
 from .coordinator import GLOneCoordinator
 from .entity import GLOneEntity
 
@@ -76,7 +78,7 @@ DIAGNOSTIC_SENSORS: tuple[GLOneSensorDescription, ...] = (
 def _consumption_sensors(kind: str) -> tuple[GLOneSensorDescription, ...]:
     device_class = kinds.device_class(kind)
     unit = kinds.unit(kind)
-    return (
+    sensors = [
         GLOneSensorDescription(
             key="consumption",
             translation_key="consumption",
@@ -95,7 +97,22 @@ def _consumption_sensors(kind: str) -> tuple[GLOneSensorDescription, ...]:
             icon="mdi:counter",
             value_fn=lambda c: c.index,
         ),
-    )
+    ]
+    # A litres variant of the consumption, handy for the HA water dashboard.
+    # Only meaningful for water (m³ ↔ L); other kinds keep their own unit.
+    if kind == KIND_WATER:
+        sensors.append(
+            GLOneSensorDescription(
+                key="consumption_liters",
+                translation_key="consumption_liters",
+                device_class=device_class,
+                state_class=SensorStateClass.TOTAL_INCREASING,
+                native_unit_of_measurement=UnitOfVolume.LITERS,
+                icon="mdi:water",
+                value_fn=lambda c: c.consumption_liters,
+            )
+        )
+    return tuple(sensors)
 
 
 async def async_setup_entry(
