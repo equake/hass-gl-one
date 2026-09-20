@@ -36,7 +36,7 @@ locally, so your data never leaves the house and updates in real time — often
 
 | Platform | What you get |
 |---|---|
-| **Sensor** | Consumption since install (`total_increasing` → works with the Energy/Water dashboard and `utility_meter`) |
+| **Sensor** | Consumption since install — in **m³** and **litres** (`total_increasing` → Energy/Water dashboard & `utility_meter`) |
 | **Sensor** | Meter index — consumption + install index, to cross-check the official app |
 | **Sensor** | Diagnostics: raw register, signal strength (RSSI), device uptime, last seen |
 | **Number** | Install index (offset), adjustable from the UI and persisted across restarts |
@@ -78,7 +78,8 @@ app (m³) = install_index + register × 0.01
 technician fitted the sensor (typically 30-something m³). Set it in the
 **Install index** number entity to make the *Meter index* sensor match the app.
 If you only care about consumption over time (daily/monthly), leave it at 0 and
-use the *Consumption* sensor with a `utility_meter` helper.
+use the *Consumption m³* (or *Consumption liters*) sensor with a `utility_meter`
+helper.
 
 ### Counter rollover
 
@@ -163,8 +164,8 @@ utility_meter:
     cycle: monthly
 ```
 
-You can also add the *Consumption* sensor directly to the **Water** (or Gas /
-Energy) section of the Energy dashboard.
+You can also add the *Consumption m³* or *Consumption liters* sensor directly to
+the **Water** section of the Energy dashboard.
 
 ---
 
