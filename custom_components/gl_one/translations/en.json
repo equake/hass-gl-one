@@ -39,7 +39,7 @@
   },
   "entity": {
     "sensor": {
-      "consumption": { "name": "Consumption m³" },
+      "consumption_m3": { "name": "Consumption m³" },
       "consumption_liters": { "name": "Consumption liters" },
       "index": { "name": "Meter index" },
       "register": { "name": "Raw register" },

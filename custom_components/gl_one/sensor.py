@@ -80,8 +80,8 @@ def _consumption_sensors(kind: str) -> tuple[GLOneSensorDescription, ...]:
     unit = kinds.unit(kind)
     sensors = [
         GLOneSensorDescription(
-            key="consumption",
-            translation_key="consumption",
+            key="consumption_m3",
+            translation_key="consumption_m3",
             device_class=device_class,
             state_class=SensorStateClass.TOTAL_INCREASING,
             native_unit_of_measurement=unit,

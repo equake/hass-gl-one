@@ -39,7 +39,7 @@
   },
   "entity": {
     "sensor": {
-      "consumption": {
+      "consumption_m3": {
         "name": "Consumo m³"
       },
       "consumption_liters": {
