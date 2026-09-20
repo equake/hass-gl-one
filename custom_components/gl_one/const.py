@@ -31,9 +31,10 @@ DEFAULT_INCREMENT: dict[str, float] = {
 }
 DEFAULT_OFFSET = 0.0
 
-# The device advertises roughly once per second while in range. If nothing has
-# been heard for this long the entities go unavailable.
-STALE_AFTER = timedelta(minutes=15)
+# How long without a decoded advertisement before the entities go unavailable.
+# The meter broadcasts its register only every ~10 minutes, and a proxy/adapter
+# can miss a few, so keep a generous window (~6 pulses) to avoid flapping.
+STALE_AFTER = timedelta(minutes=60)
 STALE_CHECK_INTERVAL = timedelta(minutes=1)
 
 CONFIG_ENTRY_VERSION = 1

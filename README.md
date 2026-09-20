@@ -43,7 +43,7 @@ locally, so your data never leaves the house and updates in real time — often
 
 Everything is **push-based** (`local_push`): the integration registers a
 callback with Home Assistant's Bluetooth stack and updates the moment a beacon
-arrives (roughly once per second while the meter is in range).
+arrives (the meter broadcasts periodically — often only every several minutes).
 
 ### Multiple meters
 
@@ -171,8 +171,8 @@ Energy) section of the Energy dashboard.
 
 **The meter isn't discovered / entities are unavailable.** Confirm Home
 Assistant's Bluetooth integration is set up and an adapter or Bluetooth proxy is
-within range. The meter advertises roughly once per second; entities go
-unavailable after 15 minutes of silence.
+within range. The meter broadcasts only periodically (often every several minutes); entities
+go unavailable after 60 minutes of silence.
 
 **A neighbour's meter showed up.** GL One meters all use the same manufacturer
 id, so nearby ones are discovered too. Each is keyed by its own pairing id —
